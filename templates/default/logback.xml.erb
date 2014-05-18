@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<!-- <logger name="org.apache.solr" level="WARNING" /> -->
+
+	<!-- Rolling file daily.. -->
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file><%= node[:chamber][:solr][:log_dir] %>/<%= node[:chamber][:solr][:war_name] %>.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern><%= node[:chamber][:solr][:log_dir] %>/<%= node[:chamber][:solr][:war_name] %>-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+			<maxHistory>30</maxHistory>
+			<!-- .. or whenever the file size reaches 100MB -->
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>50MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%p: %d{yyyy-MM-dd HH:mm:ss} [%c] %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<root>
+		<level value="WARNING" />
+		<appender-ref ref="FILE" />
+	</root>
+</configuration>
+                                    

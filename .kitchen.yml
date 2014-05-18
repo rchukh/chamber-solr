@@ -1,0 +1,22 @@
+---
+driver_plugin: vagrant
+driver_config:
+  require_chef_omnibus: true
+
+provisioner:
+  name: chef_solo
+  solo_rb:
+    ssl_verify_mode: verify_peer
+
+platforms:
+- name: centos-6.5
+
+suites:
+- name: default
+  run_list: ["recipe[chamber-solr::default]"]
+  attributes:
+    chamber:
+      solr:
+        user: 'vagrant'
+        group: 'vagrant'
+        path: '/usr/local/solr'
