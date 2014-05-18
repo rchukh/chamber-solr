@@ -52,6 +52,15 @@ template 'tomcat.xml' do
   path ::File.join(war_dir, 'META-INF', 'context.xml')
   source 'tomcat.xml.erb'
 end
+directory ::File.join(war_dir, 'WEB-INF', 'classes') do
+  mode 00755
+  recursive true
+  action :create
+end
+template 'logback.xml' do
+  path ::File.join(war_dir, 'WEB-INF', 'classes', 'logback.xml')
+  source 'logback.xml.erb'
+end
 
 # Pack solr war
 execute 'jar' do

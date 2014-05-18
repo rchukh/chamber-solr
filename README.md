@@ -36,8 +36,8 @@ Attributes
 | ```node[:chamber][:solr][:version]``` | Solr version (only 4.8+ are supported) | ```4.8.0``` |
 | ```node[:chamber][:solr][:home]``` | Solr home | ```/usr/local/solr/```  |
 | ```node[:chamber][:solr][:custom_war_path]``` | Solr custom war path (uses cookbook_file) | None. |
-| ```node[:chamber][:solr][:url]``` | Solr distribution URL | ```::File.join(node[:ark][:apache_mirror], 'dist/lucene/solr', node[:chamber][:solr][:version], "solr-#{node[:chamber][:solr][:version]}.tgz")``` |
-| ```node[:chamber][:solr][:archive_war_path]``` | Solr war path within distribution | ```::File.join("solr-#{node[:chamber][:solr][:version]}", "dist", "solr-#{node[:chamber][:solr][:version]}.war")``` |
+| ```node[:chamber][:solr][:url]``` | Solr distribution URL | See [defaults](attributes/default.rb) |
+| ```node[:chamber][:solr][:archive_war_path]``` | Solr war path within distribution | See [defaults](attributes/default.rb) |
 
 
 Usage
