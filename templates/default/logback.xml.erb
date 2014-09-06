@@ -4,9 +4,9 @@
 
 	<!-- Rolling file daily -->
 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file><%= node[:chamber][:solr][:log_dir] %>/<%= node[:chamber][:solr][:war_name] %>.log</file>
+		<file><%= node['chamber']['solr']['log_dir'] %>/<%= node['chamber']['solr']['war_name'] %>.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern><%= node[:chamber][:solr][:log_dir] %>/<%= node[:chamber][:solr][:war_name] %>-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+			<fileNamePattern><%= node['chamber']['solr']['log_dir'] %>/<%= node['chamber']['solr']['war_name'] %>-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
 			<maxHistory>30</maxHistory>
 			<!-- .. or whenever the file size reaches 100MB -->
 			<timeBasedFileNamingAndTriggeringPolicy

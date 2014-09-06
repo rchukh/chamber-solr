@@ -9,12 +9,12 @@ group :development do
 end
 
 group :lint do
-  gem 'foodcritic', '~> 3.0'
-  gem 'rubocop',    '~> 0.21'
+  gem 'foodcritic', '~> 4.0'
+  gem 'rubocop',    '~> 0.26'
 end
 
 group :unit do
-  gem 'chefspec',  '~> 3.4'
+  gem 'chefspec',  '~> 4.0'
   gem 'busser-bats'
   gem 'busser-minitest'
 end
