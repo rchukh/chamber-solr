@@ -5,9 +5,9 @@
 include_recipe 'ark'
 include_recipe 'maven'
 
-solr_pre_war = ::File.join(Chef::Config[:file_cache_path], 'chamber-solr', node[:chamber][:solr][:archive_war_path])
-war_dir = ::File.join(Chef::Config[:file_cache_path], 'chamber-solr-extracted')
-war_package = ::File.join(Chef::Config[:file_cache_path], 'chamber-solr', node[:chamber][:solr][:war_name] + '.war')
+solr_pre_war = ::File.join(Chef::Config['file_cache_path'], 'chamber-solr', node['chamber']['solr']['archive_war_path'])
+war_dir = ::File.join(Chef::Config['file_cache_path'], 'chamber-solr-extracted')
+war_package = ::File.join(Chef::Config['file_cache_path'], 'chamber-solr', node['chamber']['solr']['war_name'] + '.war')
 
 directory war_dir do
   mode 00755
@@ -17,14 +17,14 @@ end
 
 # Extract war file from solr archive
 ark 'solr_war' do
-  url node[:chamber][:solr][:url]
+  url node['chamber']['solr']['url']
   action :cherry_pick
-  creates node[:chamber][:solr][:archive_war_path]
-  path ::File.join(Chef::Config[:file_cache_path], 'chamber-solr')
+  creates node['chamber']['solr']['archive_war_path']
+  path ::File.join(Chef::Config['file_cache_path'], 'chamber-solr')
   strip_components 0
 end
 
-execute 'jar' do
+execute 'extract solr' do
   cwd war_dir
   command "jar xf #{solr_pre_war}"
   not_if { ::File.exist?(war_package) }
@@ -62,8 +62,7 @@ template 'logback.xml' do
   source 'logback.xml.erb'
 end
 
-# Pack solr war
-execute 'jar' do
+execute 'pack solr' do
   cwd war_dir
   command "jar -cfM #{war_package} -C #{war_dir} ."
   creates war_package
@@ -71,9 +70,9 @@ execute 'jar' do
 end
 
 # Move Packaged War
-remote_file ::File.join(node[:chamber][:solr][:path], node[:chamber][:solr][:war_name] + '.war') do
+remote_file ::File.join(node['chamber']['solr']['path'], node['chamber']['solr']['war_name'] + '.war') do
   source 'file://' + war_package
-  owner node[:chamber][:solr][:user]
-  group node[:chamber][:solr][:group]
+  owner node['chamber']['solr']['user']
+  group node['chamber']['solr']['group']
   mode 00644
 end

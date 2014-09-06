@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/rchukh/chamber-solr.svg)](https://travis-ci.org/rchukh/chamber-solr)
+
 Description
 ===========
 
