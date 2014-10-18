@@ -2,18 +2,31 @@
 driver_plugin: vagrant
 driver_config:
   require_chef_omnibus: true
+  vagrantfile_erb: .kitchen.Vagrantfile.erb
+  plugins:
+    cachier:
+      cache:
+        scope: ":box"
+        auto_detect: false
+        enable:
+          #- chef
+          - yum
+        generic_buckets:
+          - ['chef', '/var/chef/cache']
 
 provisioner:
   name: chef_solo
   solo_rb:
     ssl_verify_mode: verify_peer
+    file_cache_path: '/var/chef/cache/'
 
 platforms:
 - name: centos-6.5
 
 suites:
 - name: default
-  run_list: ["recipe[chamber-solr::default]"]
+  run_list:
+    - recipe[chamber-solr::default]
   attributes:
     chamber:
       solr:
