@@ -19,6 +19,7 @@ Platforms:
 
 - Centos (tested on 6.5)
 
+
 Attributes
 ==========
 
@@ -35,17 +36,18 @@ Attributes
 
 | Attribute  | Description | [Default](attributes/default.rb) |
 | ------------- | ------------- | ------------- |
-| ```node[:chamber][:solr][:version]``` | Solr version (only 4.8+ are supported) | ```4.8.0``` |
+| ```node[:chamber][:solr][:version]``` | Solr version (only 4.8+ are supported) | ```4.10.1``` |
 | ```node[:chamber][:solr][:home]``` | Solr home | ```/usr/local/solr/```  |
-| ```node[:chamber][:solr][:custom_war_path]``` | Solr custom war path (uses cookbook_file) | None. |
-| ```node[:chamber][:solr][:url]``` | Solr distribution URL | See [defaults](attributes/default.rb) |
-| ```node[:chamber][:solr][:archive_war_path]``` | Solr war path within distribution | See [defaults](attributes/default.rb) |
+| ```node[:chamber][:solr][:custom_war_path]``` | Path to solr.war to use. (Triggers `custom` mode) | None. |
 
 
-Usage
-=====
+Recipes
+============
 
-    include_recipe "chamber-solr"
+| Recipe  | Description | 
+| ------------- | ------------- | 
+| ```chamber-solr::default``` | Installs Solr. | 
+
 
 Resources/Providers
 ===================
