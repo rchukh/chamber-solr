@@ -16,7 +16,8 @@ group :lint do
 end
 
 group :unit do
-  gem 'chefspec',  '~> 4.0'
+  gem 'chef-sugar',  '~> 2.4'
+  gem 'chefspec',  '~> 4.1'
   gem 'busser-bats'
   gem 'busser-minitest'
 end

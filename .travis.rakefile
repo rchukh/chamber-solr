@@ -20,5 +20,7 @@ desc 'Run all style checks'
 task style: ['style:chef', 'style:ruby']
 
 # Rspec and ChefSpec
+# ChefSpec may show A LOT of deprecation warnings
+# For more information: https://github.com/sethvargo/chefspec/issues/507
 desc "Run ChefSpec examples"
 RSpec::Core::RakeTask.new(:spec)
