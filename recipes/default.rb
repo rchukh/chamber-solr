@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: chamber-solr
-# Recipe:: solr
+# Recipe:: default
 #
 include_recipe 'chef-sugar::default'
 require 'chef/sugar/core_extensions'
@@ -9,7 +9,7 @@ unless centos?
   Chef::Application.fatal!('Cookbook incompatible with #{platform_family?}')
 end
 
-if node['chamber']['solr']['user'].blank? && node['chamber']['solr']['group'].blank?
+if node['chamber']['solr']['user'].blank? || node['chamber']['solr']['group'].blank?
   Chef::Application.fatal!('Solr user/group ownership attributes are missing')
 end
 

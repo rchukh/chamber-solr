@@ -27,19 +27,19 @@ Attributes
 
 | Attribute  | Description |
 | ------------- | ------------- |
-| ```node[:chamber][:solr][:user]``` | Solr war user ownership | 
-| ```node[:chamber][:solr][:group]``` | Solr war group ownership | 
-| ```node[:chamber][:solr][:path]``` | Solr path to place war file | 
+| ```node['chamber']['solr']['user']``` | Solr war user ownership | 
+| ```node['chamber']['solr']['group']``` | Solr war group ownership | 
+| ```node['chamber']['solr']['path']``` | Solr path to place war file | 
 
 
 ### Custom Attributes
 
 | Attribute  | Description | [Default](attributes/default.rb) |
 | ------------- | ------------- | ------------- |
-| ```node[:chamber][:solr][:version]``` | Solr version (only 4.8+ are supported) | ```4.10.1``` |
-| ```node[:chamber][:solr][:home]``` | Solr home | ```/usr/local/solr/```  |
-| ```node[:chamber][:solr][:custom_war_path]``` | Path to solr.war to use. (Triggers `custom` mode) | None. |
-
+| ```node['chamber']['solr']['version']``` | Solr version (only 4.8+ are supported) | ```4.10.1``` |
+| ```node['chamber']['solr']['home']``` | Solr home | ```/usr/local/solr/```  |
+| ```node['chamber']['solr']['custom_war_path']``` | Path to solr.war to use. (Triggers `custom` mode) | None. |
+| ```node['chamber']['solr']['webserver']['tomcat']['include_context']``` | Whether to include context.xml into WAR file | true |
 
 Recipes
 ============

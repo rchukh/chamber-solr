@@ -1,9 +1,12 @@
 #
 # Cookbook Name:: chamber-solr
-# Recipe:: _default
+# Recipe:: _repack
 #
 include_recipe 'maven'
 
+# === PREPARATION
+# Download and extract solr.war
+#
 download_dir = ::File.join(Chef::Config['file_cache_path'], 'chamber-solr')
 war_dir = ::File.join(Chef::Config['file_cache_path'], 'chamber-solr-extracted')
 
@@ -25,7 +28,9 @@ execute 'extract solr' do
   not_if { ::File.exist?(repacked_war) }
 end
 
-# Load  additional libraries
+# === LIBRARY EXTENSIONS
+# Load additional libraries to include in solr.war
+#
 %w(log4j-over-slf4j slf4j-api jcl-over-slf4j).each do | libname |
   maven libname do
     group_id 'org.slf4j'
@@ -42,30 +47,39 @@ end
   end
 end
 
-# Prepare solr server configuration
-template 'tomcat.xml' do
-  path ::File.join(war_dir, 'META-INF', 'context.xml')
-  source 'tomcat.xml.erb'
-end
-directory ::File.join(war_dir, 'WEB-INF', 'classes') do
+# === CONFIGURATION EXTENSIONS
+# Add additional config files to solr.war
+#
+directory 'classes directory' do
+  path ::File.join(war_dir, 'WEB-INF', 'classes')
   mode 00755
   recursive true
   action :create
 end
+# Add logging configuration
 template 'logback.xml' do
   path ::File.join(war_dir, 'WEB-INF', 'classes', 'logback.xml')
   source 'logback.xml.erb'
 end
+# Add Tomcat-specific context settings (environment, security, etc.)
+template 'tomcat.xml' do
+  path ::File.join(war_dir, 'META-INF', 'context.xml')
+  source 'tomcat.xml.erb'
+  only_if { node['chamber']['solr']['webserver']['tomcat']['include_context'] }
+end
 
+# === PACKAGE
+#
+# Package solr war
 execute 'pack solr' do
   cwd war_dir
   command "jar -cfM #{repacked_war} -C #{war_dir} ."
   creates repacked_war
   not_if { ::File.exist?(repacked_war) }
 end
-
 # Move Packaged War
-remote_file ::File.join(node['chamber']['solr']['path'], node['chamber']['solr']['war_name'] + '.war') do
+remote_file 'place solr' do
+  path ::File.join(node['chamber']['solr']['path'], node['chamber']['solr']['war_name'] + '.war')
   source 'file://' + repacked_war
   owner node['chamber']['solr']['user']
   group node['chamber']['solr']['group']
